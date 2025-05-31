@@ -1,4 +1,4 @@
-import { Purchase } from '../models/purchase.js';
+import  Purchase  from '../models/purchase.js';
 import Stripe from 'stripe';
 import User from "../models/User.js";
 import Course from '../models/Course.js';
@@ -50,10 +50,7 @@ export const purchaseCourse = async (req, res) => {
       return res.status(404).json({ success: false, message: "User or course not found" });
     }
 
-    const amount = (
-      courseData.coursePrice -
-      (courseData.discount * courseData.coursePrice) / 100
-    ).toFixed(2);
+    const amount = parseFloat((courseData.coursePrice - (courseData.discount * courseData.coursePrice) / 100).toFixed(2));
 
     const newPurchase = await Purchase.create({
       courseId: courseData._id,
@@ -163,7 +160,7 @@ export const addUserRating = async (req, res) => {
     if (existingRatingIndex > -1) {
       course.courseRatings[existingRatingIndex].rating = rating;
     } else {
-      course.courseRatings.push({ userId, rating });
+      course.courseRatings.push({ userID: userId, rating });
     }
 
     await course.save();
@@ -173,3 +170,5 @@ export const addUserRating = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
