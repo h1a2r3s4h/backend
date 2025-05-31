@@ -6,7 +6,7 @@ import { clerkWebhook, stripeWebhooks } from './controllers/webhooks.js';
 import educatorRouter from './routes/educatorRoutes.js';
 import { clerkMiddleware } from '@clerk/express';
 import connectCloudinary from './configs/cloudinary.js';
-import courseRouter from './routes/Courseroute.js';
+import courseRoutes from './routes/courseRoutes.js';
 import userRouter from './routes/userRoutes.js';
 
 // Initialize express
@@ -21,7 +21,7 @@ app.use(clerkMiddleware());
 app.get('/', (req, res) => res.send('API is running...'));
 app.post('/clerk', clerkWebhook);
 app.use('/api/educator', educatorRouter);
-app.use('/api/course', courseRouter);
+app.use('/api/course', courseRoutes);
 app.use('/api/user', userRouter);
 app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
 
